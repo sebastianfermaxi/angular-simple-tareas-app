@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 text-center">
+
+      <div class="card mb-4 mt-3">
+        <div class="card-body">
+          <form action="" [formGroup]="formTarea" >
+            <input type="text" placeholder="Ingrese tarea" formControlName="titulo" class="form-control mt-3 mb-2 is-invalid"
+            [ngClass]="{'is-invalid': formTarea.controls['titulo'].touched && formTarea.controls['titulo'].invalid }">
+
+            <label >Seleccione prioridad</label>
+            <select name="" id="" class="form-select mb-3" formControlName="prioridad"
+            [ngClass]="{'is-invalid': formTarea.controls['prioridad'].touched && formTarea.controls['prioridad'].invalid}">
+
+              <option disabled selected >---</option>
+              <option>Baja</option>
+              <option>Media</option>
+              <option>Alta</option>
+
+            </select>
+
+            <button class="btn btn-success mb-3" (click)="agregarTarea()" [disabled]="formTarea.invalid">Agregar</button>
+          </form>
+        </div>
+      </div>
+
+
+
+      <div class="card" *ngIf="listaTareas.length > 0">
+        <div class="card-body">
+          <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Título</th>
+                      <th>Prioridad</th>
+                      <th scope="col">Completada</th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tarea of listaTareas; index as i">
+                      <td>{{tarea.titulo}}</td>
+
+                      <td><span class="badge" [ngClass]="{'bg-success': tarea.prioridad === 'Alta', 'bg-warning': tarea.prioridad === 'Media', 'bg-danger': tarea.prioridad === 'Baja'}">{{tarea.prioridad}}</span></td>
+
+                      <td><img src="../../../assets/img/acept.png" heigth="20px" width="20px" alt="" [ngClass]=" tarea.completada ? 'done-true' : 'done' "
+                         (click)="tareaDone(i)"></td>
+                      <td><img src="../../../assets/img/delete-rojo.png" heigth="20px" width="20px" alt="" class="delete" (click)="borrarTarea(i)"></td>
+                    </tr>
+
+                  </tbody>
+            </table>
+        </div>
+      </div>
+      <div *ngIf="listaTareas.length === 0">
+        <h3 class="text-center">No hay nada para mostrar!</h3>
+      </div>
+
+    </div>
+  </div>
+</div>
